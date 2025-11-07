@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>MundaX Pro — Revolutionary AI Farm Assistant</title>
+  <meta name="description" content="Advanced AI-powered agricultural assistant for Zimbabwean farmers with real-time multi-AI integration">
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#2E7D32"/>
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="top safe">
+      <div class="brand">
+        <div class="logo">🌱</div>
+        <div class="title-block">
+          <div class="name">MundaX Pro</div>
+          <div class="subtitle" id="subtitle">Revolutionary AI • Zimbabwe</div>
+        </div>
+      </div>
+      <div class="status">
+        <select id="langSelectTop" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="sn">SN</option>
+        </select>
+        <span id="onlineDot" class="dot online" title="Online"></span>
+        <div id="aiStatus" class="ai-status">AI Ready</div>
+      </div>
+    </header>
+
+    <main id="main" class="main">
+      <!-- Home Page -->
+      <section id="homePage" class="page active">
+        <div class="card glass hero">
+          <div class="hero-left">
+            <div class="greeting" id="greeting">Good day Farmer 🌞</div>
+            <div class="hero-text" id="heroText">Welcome to <strong>MundaX Pro</strong> — Revolutionary AI farm assistant with multi-AI intelligence.</div>
+          </div>
+          <div class="hero-actions">
+            <button id="openAssistantBtn" class="btn primary large">Ask Revolutionary AI</button>
+            <button id="openScannerBtn" class="btn outline large">AI Crop Scan 📷</button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="card-title" id="nextTaskTitle">AI Recommended Tasks</div>
+            <div id="aiTasks" class="task-list">
+              <div class="loading">Analyzing your farm data...</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" id="estYieldTitle">AI Yield Prediction</div>
+            <div id="estYield" class="big">— kg</div>
+            <div class="confidence" id="yieldConfidence">Confidence: —%</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" id="marketTitle">Live Market Data</div>
+            <div class="market-row"><span>Maize</span><span id="priceMaize">— ZWL</span></div>
+            <div class="market-row"><span>Tobacco</span><span id="priceTobacco">— ZWL</span></div>
+            <div class="market-source" id="marketSource">Source: Live API</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" id="weatherTitle">Live Weather</div>
+            <div id="weatherAlert" class="weather-alert">Loading live data...</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">AI Farm Health Monitor</div>
+          <div id="healthMonitor" class="health-monitor">
+            <div class="health-metric">
+              <span>Soil Health</span>
+              <div class="health-bar"><div class="health-fill" id="soilHealth"></div></div>
+            </div>
+            <div class="health-metric">
+              <span>Pest Risk</span>
+              <div class="health-bar"><div class="health-fill" id="pestRisk"></div></div>
+            </div>
+            <div class="health-metric">
+              <span>Crop Vigor</span>
+              <div class="health-bar"><div class="health-fill" id="cropVigor"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Assistant Page -->
+      <section id="assistantPage" class="page">
+        <div class="card chat-card">
+          <div class="assistant-header">
+            <div class="avatar">🚀</div>
+            <div>
+              <div class="assistant-name" id="assistantName">Revolutionary AI Assistant</div>
+              <div class="assistant-sub" id="assistantSub">Powered by DeepSeek, OpenAI & Google AI • Real-time Data</div>
+            </div>
+          </div>
+
+          <div id="chatWindow" class="chat-window">
+            <div class="chat-message system" data-lang="en">
+              <strong>🚀 Revolutionary AI Online</strong><br>
+              I'm connected to multiple AI systems for the most accurate farming advice. Ask me anything about crops, diseases, markets, or weather!
+            </div>
+            <div class="chat-message system" data-lang="sn" style="display:none">
+              <strong>🚀 Revolutionary AI Yakagadzirwa</strong><br>
+              Ndakabatana neakawanda AI masisitimu kuti ndipe mazano akanyatsoita ekurima. Ndibvunze chero chinhu nezvezvirimwa, zvirwere, misika, kana mamiriro ekunze!
+            </div>
+          </div>
+
+          <form id="chatForm" class="chat-input">
+            <input id="chatInput" autocomplete="off" placeholder="Ask anything about farming in Zimbabwe..." />
+            <button class="btn primary" type="submit">Ask AI</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Scanner Page -->
+      <section id="scannerPage" class="page">
+        <div class="card">
+          <div class="card-title" id="scannerTitle">Revolutionary AI Scanner</div>
+          <div class="scanner-mode-selector">
+            <button class="mode-btn active" data-mode="disease">Disease Detection</button>
+            <button class="mode-btn" data-mode="nutrient">Nutrient Analysis</button>
+            <button class="mode-btn" data-mode="pest">Pest Identification</button>
+          </div>
+          
+          <div class="scanner-area">
+            <div id="scannerView" class="scanner-view">
+              <video id="video" class="camera" autoplay playsinline></video>
+              <img id="imgPreview" class="preview" alt="preview" />
+              <canvas id="scanCanvas" style="display:none"></canvas>
+              <div class="scanner-overlay">
+                <div class="scan-guide">Align crop in frame for AI analysis</div>
+              </div>
+            </div>
+
+            <div class="scanner-controls">
+              <button id="startCam" class="btn outline">📷 Start Camera</button>
+              <input id="fileInput" type="file" accept="image/*" />
+              <button id="analyzeBtn" class="btn primary" disabled>🔍 AI Analyze</button>
+            </div>
+
+            <div id="scanResult" class="scan-result">
+              <div class="result-placeholder">
+                Capture or upload crop image for revolutionary AI analysis
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Page -->
+      <section id="dashboardPage" class="page">
+        <div class="card">
+          <div class="card-title">Revolutionary AI Analytics</div>
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <div class="metric-value" id="totalPlots">0</div>
+              <div class="metric-label">Active Plots</div>
+            </div>
+            <div class="analytics-card">
+              <div class="metric-value" id="avgHealth">0%</div>
+              <div class="metric-label">Avg. Health</div>
+            </div>
+            <div class="analytics-card">
+              <div class="metric-value" id="riskAlerts">0</div>
+              <div class="metric-label">AI Alerts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Farm Records with AI Insights</div>
+          <div id="records" class="records">
+            <div class="empty">No records yet. Add your first plot.</div>
+          </div>
+          <div class="action-row">
+            <button id="openAddRecord" class="btn primary large">+ Add Plot</button>
+            <button id="aiAnalyzeAll" class="btn outline">AI Analyze All</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Page -->
+      <section id="settingsPage" class="page">
+        <div class="card">
+          <div class="card-title">Revolutionary AI Settings</div>
+          <div class="setting-row">
+            <label>AI Provider</label>
+            <select id="aiProviderSelect">
+              <option value="all">All AI Systems (Recommended)</option>
+              <option value="deepseek">DeepSeek AI</option>
+              <option value="openai">OpenAI ChatGPT</option>
+              <option value="google">Google Gemini</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label>Response Quality</label>
+            <select id="responseQuality">
+              <option value="fast">Fast Response</option>
+              <option value="balanced">Balanced</option>
+              <option value="detailed">Detailed Analysis</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label>API Configuration</label>
+            <button id="configureAPI" class="btn outline">Configure AI Keys</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Data & Backup</div>
+          <div class="setting-row">
+            <label>Export Farm Data</label>
+            <button id="exportBtn" class="btn outline">📊 Export Data</button>
+          </div>
+          <div class="setting-row">
+            <label>Clear AI Cache</label>
+            <button id="clearCache" class="btn subtle">Clear Cache</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Add Record Modal -->
+    <div id="recordModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-title" id="addRecordTitle">Add Smart Farm Plot</div>
+        <form id="recordForm">
+          <label>Plot Name <input id="plotName" required placeholder="Field A, North Plot etc." /></label>
+          <label>Crop Type
+            <select id="cropSelect">
+              <option value="maize">Maize (Chibage)</option>
+              <option value="tobacco">Tobacco (Fodya)</option>
+            </select>
+          </label>
+          <label>Variety
+            <select id="varietySelect">
+              <option value="sc403">SC403 Maize</option>
+              <option value="sc727">SC727 Maize</option>
+              <option value="sc633">SC633 Maize</option>
+              <option value="virginia">Virginia Tobacco</option>
+              <option value="burley">Burley Tobacco</option>
+            </select>
+          </label>
+          <label>Planting Date <input id="plantDate" type="date" required /></label>
+          <label>Area (hectares) <input id="areaInput" type="number" min="0.1" step="0.1" required /></label>
+          <label>Soil Type
+            <select id="soilType">
+              <option value="sandy">Sandy</option>
+              <option value="clay">Clay</option>
+              <option value="loam">Loam</option>
+              <option value="red">Red Clay</option>
+            </select>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Save with AI Analysis</button>
+            <button type="button" id="closeRecord" class="btn subtle">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- API Configuration Modal -->
+    <div id="apiConfigModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-title">Revolutionary AI API Configuration</div>
+        <form id="apiConfigForm">
+          <label>DeepSeek API Key
+            <input type="password" id="deepseekKey" placeholder="Enter your DeepSeek API key" />
+          </label>
+          <label>OpenAI API Key
+            <input type="password" id="openaiKey" placeholder="Enter your OpenAI API key" />
+          </label>
+          <label>Google AI API Key
+            <input type="password" id="googleKey" placeholder="Enter your Google AI API key" />
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Save & Connect</button>
+            <button type="button" class="btn subtle" onclick="hideModal('apiConfigModal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <nav class="bottom safe">
+      <button class="nav-btn active" data-page="homePage">🏠<span>Home</span></button>
+      <button class="nav-btn" data-page="assistantPage">🚀<span>AI Assistant</span></button>
+      <button class="nav-btn" data-page="scannerPage">🔍<span>Scanner</span></button>
+      <button class="nav-btn" data-page="dashboardPage">📈<span>Analytics</span></button>
+      <button class="nav-btn" data-page="settingsPage">⚙️<span>Settings</span></button>
+    </nav>
+
+    <footer class="footer safe">MundaX Pro • Revolutionary AI • Multi-AI Powered • v3.0</footer>
+  </div>
+
+  <script src="ai-engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
